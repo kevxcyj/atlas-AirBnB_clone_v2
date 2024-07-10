@@ -27,7 +27,6 @@ def pythoniscool(text='is cool'):
     """ Displays Python followed by the value of the text variable
         Replace underscore symbols with a space"""
 
-
     return 'Python ' + text.replace('_', ' ')
 
 
