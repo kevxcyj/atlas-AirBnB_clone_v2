@@ -3,6 +3,9 @@
 import uuid
 import models
 from datetime import datetime
+from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 time_fmt = "%Y-%m-%dT%H:%M:%S.%f"
@@ -14,6 +17,11 @@ else:
 
 class BaseModel:
     """A base class for all hbnb models"""
+    if models.storage_t == "db":
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=datetime.utcnow)
+
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
