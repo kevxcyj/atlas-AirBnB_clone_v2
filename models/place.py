@@ -21,7 +21,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
 
 
 class Place(BaseModel):
-    """ A place to stay """
+    """ Place class """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -52,3 +52,14 @@ class Place(BaseModel):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            """Returns reviews"""
+            from models.review import Review
+            review_list = []
+            all_reviews = models.storage.all(Review)
+            for review in all_reviews.values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
